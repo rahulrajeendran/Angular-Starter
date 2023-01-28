@@ -1,0 +1,83 @@
+<div class="main" >
+    <div id="d1">
+        <div class="n1"></div>
+            <div class="nc">
+                <div class="card">
+                    <h1 class="card__title">New Task</h1>
+                    <p class="card__content">Create your new task
+                    </p>
+                    <form [formGroup]="taskform">
+                        <small *ngIf="taskform.controls['task'].dirty && taskform.hasError('required','task')" class="alerting">*Required</small><br>
+                        <input formControlName="task" type="text" placeholder="Task" class="input" value="">
+                        <pre></pre>
+                        <input formControlName="des" type="text" placeholder="Description" class="input">
+                        <pre></pre>
+                        <button mat-button [disabled]="taskform.invalid" (click)="submit()" id="btn"> Add </button>
+                        <button mat-button [disabled]="!updt" (click)="updating()" id="btn"> Update </button>
+                    </form>
+                </div>
+            </div>
+            <div class="n1"></div>
+    </div>
+    
+    <div id="d2">
+        <div></div>
+        <div class="width-adj">
+            <h2>To-Do</h2>
+            <div class="card">
+                <div
+                cdkDropList
+                #todoList="cdkDropList"
+                [cdkDropListData]="todo"
+                [cdkDropListConnectedTo]="[doneList,doingList]"
+                class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of todo; let i=index" cdkDrag>{{item}}
+                    <div class="box">
+                        <button mat-icon-button color="warn" (click)="updatetodo(item,i)" id="btn"><mat-icon class="edit-icn pen">edit</mat-icon></button>
+                        <button mat-icon-button color="warn" (click)="deletetodo(i)" id="btn"><mat-icon id="ico">delete</mat-icon></button>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="width-adj">
+            <h2>Doing</h2>
+            <div class="card">
+                <div
+                    cdkDropList
+                    #doingList="cdkDropList"
+                    [cdkDropListData]="doing"
+                    [cdkDropListConnectedTo]="[doneList,todoList]"
+                    class="example-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <div class="example-box" *ngFor="let item of doing; let i=index" cdkDrag>{{item}}
+                        <div class="box">
+                            <button mat-icon-button color="warn" (click)="updatedoing(item,i)" id="btn" class="pen"><mat-icon class="edit-icn">edit</mat-icon></button>
+                            <button mat-icon-button color="warn" (click)="deletedoing(i)" id="btn"><mat-icon id="ico">delete</mat-icon></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="width-adj">
+            <h2>Done</h2>
+            <div class="card">
+                <div
+                    cdkDropList
+                    #doneList="cdkDropList"
+                    [cdkDropListData]="done"
+                    [cdkDropListConnectedTo]="[todoList,doingList]"
+                    class="example-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <div class="example-box" *ngFor="let item of done; let i=index" cdkDrag>{{item}}
+                        <div class="box">
+                            <button mat-icon-button color="warn" (click)="deletedone(i)" id="btn"><mat-icon id="ico">delete</mat-icon></button>
+                            <button mat-icon-button color="warn" ><mat-icon class="chk">check_circle</mat-icon></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
